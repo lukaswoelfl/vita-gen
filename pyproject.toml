@@ -1,0 +1,22 @@
+[project]
+name = "cv-generator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Lukas Wölfl", email = "rope-room2r@icloud.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fpdf2>=2.8.5",
+    "pydantic>=2.12.5",
+    "pyyaml>=6.0.3",
+    "typer>=0.21.1",
+]
+
+[project.scripts]
+cv-generator = "cv_generator.main:main"
+
+[build-system]
+requires = ["uv_build>=0.9.14,<0.10.0"]
+build-backend = "uv_build"
