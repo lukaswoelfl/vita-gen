@@ -26,25 +26,44 @@ class CVRenderer(FPDF):
         self.set_font("Roboto", size=11)
         self.set_draw_color(200, 200, 200)  # Light grey for lines
 
+        # Default section titles
+        self.titles = {
+            "experiences": "BERUFLICHE LAUFBAHN",
+            "education": "AUSBILDUNG",
+            "skills": "KENNTNISSE & SKILLS",
+            "languages": "Sprachen",
+        }
+
+        # Override with custom titles if provided
+        if self.cv.section_titles:
+            self.titles.update(self.cv.section_titles)
+
+        # Default labels
+        self.labels = {"born_on": "Geboren am"}
+
+        if self.cv.labels:
+            self.labels.update(self.cv.labels)
+
     def header(self):
         pass
 
     def render(self, output_path: str):
+
         self._render_header()
         self._render_contact_info()
-        self._render_section_title("BERUFLICHE LAUFBAHN")
+        self._render_section_title(self.titles["experiences"])
         prev_company = None
         for exp in self.cv.experiences:
             self._render_experience(exp, prev_company)
             prev_company = exp.company
 
         self.ln(5)
-        self._render_section_title("AUSBILDUNG")
+        self._render_section_title(self.titles["education"])
         for edu in self.cv.education:
             self._render_education(edu)
 
         self.ln(5)
-        self._render_section_title("KENNTNISSE & SKILLS")
+        self._render_section_title(self.titles["skills"])
         self._render_skills(self.cv.skills, self.cv.languages)
 
         self.ln(10)
@@ -73,7 +92,8 @@ class CVRenderer(FPDF):
 
     def _render_contact_info(self):
         self.set_font("Roboto", size=10)
-        info = f"{self.cv.person.address}\n{self.cv.person.phone} | {self.cv.person.email}\n{self.cv.person.linkedin}\nGeboren am {self.cv.person.birth_date}"
+        born_prefix = self.labels["born_on"]
+        info = f"{self.cv.person.address}\n{self.cv.person.phone} | {self.cv.person.email}\n{self.cv.person.linkedin}\n{born_prefix} {self.cv.person.birth_date}"
         self.multi_cell(0, 5, info)
         self.ln(5)
         self.line(10, self.get_y(), 200, self.get_y())
@@ -211,7 +231,7 @@ class CVRenderer(FPDF):
         if self.get_y() + 15 > self.page_break_trigger:
             self.add_page()
 
-        self.cell(0, 6, "Sprachen", ln=True)
+        self.cell(0, 6, self.titles["languages"], ln=True)
         self.set_font("Roboto", size=11)
         self.multi_cell(0, 5, languages)
 
@@ -247,4 +267,12 @@ class CVRenderer(FPDF):
             # Add name below line
             self.ln(2)
             self.set_font("Roboto", size=10)
+
+            # Print name centered under line
             self.cell(line_width, 5, self.cv.person.name, align="C", ln=True)
+
+            # Print date if available
+            if self.cv.person.signature_date:
+                self.cell(
+                    line_width, 5, self.cv.person.signature_date, align="C", ln=True
+                )

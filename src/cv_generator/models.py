@@ -35,9 +35,12 @@ class Person(BaseModel):
     image_width: float = 32.0
     signature_path: Optional[str] = None
     signature_width: float = 40.0
+    signature_date: Optional[str] = None
 
 
 class CV(BaseModel):
+    section_titles: Optional[dict] = None
+    labels: Optional[dict] = None
     person: Person
     experiences: List[Experience]
     education: List[Education]
