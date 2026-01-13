@@ -235,7 +235,8 @@ class CVRenderer(FPDF):
             )
 
             # Move down below image
-            self.ln((self.cv.person.signature_width / 2) + 2)
+            # drastically reduce spacing to pull line up (overlapping bottom of image box heavily)
+            self.ln((self.cv.person.signature_width / 2) - 10)
 
             # Draw line
             line_width = self.cv.person.signature_width
