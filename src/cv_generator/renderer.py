@@ -90,60 +90,50 @@ class CVRenderer(FPDF):
         self.ln(2)
 
     def _render_experience(self, exp: Experience, prev_company: str = None):
-        # Check if we need a page break (rough check)
+        # Check if we need a page break
         self.set_font("Roboto", size=11)
-
-        # Calculate height needed for this specific role block
-        # Title + Date line (6) + description + spacing
         desc_height = 0
-        effective_width = self.w - self.l_margin - self.r_margin - 6
+        effective_width = (
+            self.w - self.l_margin - self.r_margin - 6
+        )  # Account for bullet area
         for point in exp.description:
+            # Calculate height of this bullet point
             h = self.multi_cell(
                 effective_width, 5, point.strip(), dry_run=True, output="HEIGHT"
             )
             desc_height += h
 
-        needed_height = 6 + desc_height + 3
-        # If new company, we also need space for the header (8mm) + spacing (2)
-        if exp.company != prev_company:
-            needed_height += 10
+        # Total height: Date(6) + Title(6) + Company(6) + Description + Spacing(3) + Potential Spacer(4)
+        total_height = 18 + desc_height + 3
+        # Add extra height calculation for spacing if new company
+        if prev_company is not None and exp.company != prev_company:
+            total_height += 4
 
-        if self.get_y() + needed_height > self.page_break_trigger:
+        if self.get_y() + total_height > self.page_break_trigger:
             self.add_page()
-            # If page break forces a new company header on next page, prev_company is irrelevant for spacing logic
-            # but we still want to render the header.
 
-        # Render Company Header if changed
-        if exp.company != prev_company:
-            if (
-                prev_company is not None and self.get_y() > 30
-            ):  # Add spacing between groups (unless top of page)
-                self.ln(4)
+        # Add visual separation between different companies (unless top of page)
+        if (
+            prev_company is not None
+            and exp.company != prev_company
+            and self.get_y() > 30
+        ):
+            self.ln(4)
 
-            self.set_font("Roboto", "B", 12)
-            self.cell(0, 6, exp.company.upper(), ln=True)
-            self.ln(1)
-
-        # Render Role Title and Date
-        # Format: TITLE | Start - End
         self.set_font("Roboto", "B", 11)
-        role = exp.title.upper()
+        # Date range
         date_range = f"{exp.start_date} - {exp.end_date}"
+        self.cell(0, 6, date_range, ln=True)
 
-        # We can put them on one line with the date right-aligned, or same line separated by pipe
-        # Let's try pipe for a clean look, or just title then date below.
-        # User requested clearer structure.
-        # Let's do: TITLE (Bold) ........... Date (Right aligned)
+        # Title
+        self.set_font("Roboto", "B", 12)
+        self.cell(0, 6, exp.title.upper(), ln=True)
 
-        # Store current Y
-        y = self.get_y()
-
-        # Print Title
-        self.cell(0, 6, role, ln=False)
-
-        # Print Date right aligned
-        self.set_font("Roboto", size=11)
-        self.cell(0, 6, date_range, align="R", ln=True)
+        # Company - ALWAYS PRINT
+        # Removed inconsistent internal padding
+        self.set_font("Roboto", "I", 11)
+        self.cell(0, 6, exp.company, ln=True)
+        self.ln(1)
 
         # Description
         self.set_font("Roboto", size=11)
