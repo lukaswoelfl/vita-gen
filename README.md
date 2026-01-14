@@ -1,4 +1,4 @@
-# Portfolio CV Generator
+# vita_gen - Portfolio CV Generator
 
 A Python-based tool to generate a professional CV/Resume in PDF format. Designed to be customizable via YAML configuration and easily deployable.
 
@@ -39,7 +39,7 @@ This project uses [`uv`](https://github.com/astral-sh/uv) for dependency managem
 Generate your CV by running:
 
 ```bash
-uv run cv-generator
+uv run vita-gen
 ```
 
 This will create `data/cv.pdf`.
@@ -49,7 +49,7 @@ This will create `data/cv.pdf`.
 You can override both images and their dimensions in a single command:
 
 ```bash
-uv run cv-generator \
+uv run vita-gen \
   --image custom_pic.jpg --image-width 35 \
   --signature custom_sig.png --signature-width 45
 ```
@@ -59,7 +59,7 @@ uv run cv-generator \
 Override the profile picture from the config:
 
 ```bash
-uv run cv-generator --image path/to/photo.jpg --image-width 50
+uv run vita-gen --image path/to/photo.jpg --image-width 50
 ```
 
 ### Custom Signature
@@ -67,7 +67,7 @@ uv run cv-generator --image path/to/photo.jpg --image-width 50
 Override the signature image and width:
 
 ```bash
-uv run cv-generator --signature path/to/sig.png --signature-width 45
+uv run vita-gen --signature path/to/sig.png --signature-width 45
 ```
 
 ### Custom Configuration
@@ -75,12 +75,12 @@ uv run cv-generator --signature path/to/sig.png --signature-width 45
 You can specify a different configuration file:
 
 ```bash
-uv run cv-generator --config path/to/my_cv.yaml
+uv run vita-gen --config path/to/my_cv.yaml
 ```
 
 ## Structure
 
--   `src/cv_generator/`: Source code.
+-   `src/vita_gen/`: Source code.
 -   `data/`: Configuration and assets (ignored by git).
 -   `cv.pdf`: Generated output (ignored by git).
 
