@@ -108,7 +108,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-vita_gen/
+/vita_gen/
 
 # Spyder project settings
 .spyderproject
