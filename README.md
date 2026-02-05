@@ -23,14 +23,69 @@ This project uses [`uv`](https://github.com/astral-sh/uv) for dependency managem
 
 ## Configuration
 
-1.  **Edit Data**: Modify `data/cv_data.yaml`. You can specify the paths and widths for your visual assets:
+1.  **Edit Data**: Modify `data/cv_data.yaml`. Below is a complete example of what this file should look like:
     ```yaml
     person:
-      name: "Your Name"
+      name: "JOHN DOE"
+      title: "Software Engineer | M.Sc. Computer Science"
+      address: "123 Tech Street, 12345 Innovation City"
+      phone: "+49 123 4567890"
+      email: john.doe@example.com
+      linkedin: linkedin.com/in/johndoe/
+      birth_date: "01. January 1990"
       image_path: "data/profile_pic.png"
       image_width: 32.0
-      <signature_path: "data/signature.png">
+      signature_path: "data/signature.png"
       signature_width: 40.0
+      signature_date: "City, 05. February 2026"
+
+    section_titles:
+      experiences: "WORK EXPERIENCE"
+      education: "EDUCATION"
+      skills: "SKILLS & EXPERTISE"
+      languages: "LANGUAGES"
+
+    labels:
+      born_on: "Born on"
+
+    education:
+      - degree: "COMPUTER SCIENCE (M.Sc.)"
+        institution: "Tech University"
+        start_date: "10/2018"
+        end_date: "09/2020"
+        details:
+          - "Focus on Artificial Intelligence and Distributed Systems"
+      - degree: "COMPUTER SCIENCE (B.Sc.)"
+        institution: "State University"
+        start_date: "10/2014"
+        end_date: "09/2018"
+        details:
+          - "Software Engineering fundamentals and Mathematics"
+
+    experiences:
+      - title: "SENIOR SOFTWARE ENGINEER"
+        company: "Tech Solutions GmbH"
+        start_date: "01/2021"
+        end_date: "Present"
+        description:
+          - "Lead development of high-performance microservices using Python and FastAPI."
+          - "Architected and implemented a scalable data processing pipeline on AWS."
+          - "Mentored junior developers and improved code quality through rigorous reviews."
+      - title: "JUNIOR DEVELOPER"
+        company: "Early Stage Startup"
+        start_date: "10/2020"
+        end_date: "12/2020"
+        description:
+          - "Developed interactive frontend components using React and TypeScript."
+          - "Contributed to the backend API development and database optimization."
+
+    skills:
+      - name: "Languages & Frameworks"
+        skills: "Python, Java, JavaScript, TypeScript, FastAPI, React, Node.js"
+      - name: "Infrastructure & Tools"
+        skills: "AWS, Docker, Kubernetes, Git, CI/CD, Terraform"
+
+    languages: "English (Native), German (Fluent)"
     ```
 2.  **Visual Assets**: Place your images in the `data/` directory or reference them from anywhere else using absolute or relative paths.
 
@@ -78,74 +133,6 @@ You can specify a different configuration file:
 uv run vita-gen --config path/to/my_cv.yaml
 ```
 
-
-## Example Configuration
-
-Below is a complete example of what `data/cv_data.yaml` should look like. This structure supports grouping roles at the same company and custom section titles.
-
-```yaml
-person:
-  name: "JOHN DOE"
-  title: "Software Engineer | M.Sc. Computer Science"
-  address: "123 Tech Street, 12345 Innovation City"
-  phone: "+49 123 4567890"
-  email: john.doe@example.com
-  linkedin: linkedin.com/in/johndoe/
-  birth_date: "01. January 1990"
-  image_path: "data/profile_pic.png"
-  image_width: 32.0
-  signature_path: "data/signature.png"
-  signature_width: 40.0
-  signature_date: "City, 05. February 2026"
-
-section_titles:
-  experiences: "WORK EXPERIENCE"
-  education: "EDUCATION"
-  skills: "SKILLS & EXPERTISE"
-  languages: "LANGUAGES"
-
-labels:
-  born_on: "Born on"
-
-education:
-  - degree: "COMPUTER SCIENCE (M.Sc.)"
-    institution: "Tech University"
-    start_date: "10/2018"
-    end_date: "09/2020"
-    details:
-      - "Focus on Artificial Intelligence and Distributed Systems"
-  - degree: "COMPUTER SCIENCE (B.Sc.)"
-    institution: "State University"
-    start_date: "10/2014"
-    end_date: "09/2018"
-    details:
-      - "Software Engineering fundamentals and Mathematics"
-
-experiences:
-  - title: "SENIOR SOFTWARE ENGINEER"
-    company: "Tech Solutions GmbH"
-    start_date: "01/2021"
-    end_date: "Present"
-    description:
-      - "Lead development of high-performance microservices using Python and FastAPI."
-      - "Architected and implemented a scalable data processing pipeline on AWS."
-      - "Mentored junior developers and improved code quality through rigorous reviews."
-  - title: "JUNIOR DEVELOPER"
-    company: "Early Stage Startup"
-    start_date: "10/2020"
-    end_date: "12/2020"
-    description:
-      - "Developed interactive frontend components using React and TypeScript."
-      - "Contributed to the backend API development and database optimization."
-
-skills:
-  - name: "Languages & Frameworks"
-    skills: "Python, Java, JavaScript, TypeScript, FastAPI, React, Node.js"
-  - name: "Infrastructure & Tools"
-    skills: "AWS, Docker, Kubernetes, Git, CI/CD, Terraform"
-
-languages: "English (Native), German (Fluent)"
-```
 
 ## Structure
 
